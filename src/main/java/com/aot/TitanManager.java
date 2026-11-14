@@ -8,6 +8,8 @@ import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
@@ -112,7 +114,6 @@ public final class TitanManager {
     public static void push(Entity e, Vec3 v) {
         e.setDeltaMovement(v);
         if (e instanceof ServerPlayer sp) sp.connection.send(new ClientboundSetEntityMotionPacket(sp));
-        else e.hurtMarked = true;
     }
 
     private static void mod(LivingEntity e, Holder<Attribute> attr, String name, double value, AttributeModifier.Operation op) {
@@ -164,7 +165,10 @@ public final class TitanManager {
     }
 
     static void lightning(ServerLevel lv, Entity e, double spread) {
-        LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(lv, EntitySpawnReason.TRIGGERED);
+        @SuppressWarnings("unchecked")
+        EntityType<LightningBolt> boltType = (EntityType<LightningBolt>) BuiltInRegistries.ENTITY_TYPE
+                .getValue(Identifier.withDefaultNamespace("lightning_bolt"));
+        LightningBolt bolt = boltType.create(lv, EntitySpawnReason.TRIGGERED);
         if (bolt == null) return;
         bolt.setPos(e.getX() + (lv.getRandom().nextDouble() - 0.5) * spread * 2, e.getY(),
                 e.getZ() + (lv.getRandom().nextDouble() - 0.5) * spread * 2);
