@@ -43,7 +43,7 @@ public class AotMod implements ModInitializer {
         });
         // keep inherited Titan powers after respawn
         ServerPlayerEvents.COPY_FROM.register((oldP, newP, alive) -> {
-            for (String t : oldP.getTags()) if (t.startsWith("aot_")) newP.addTag(t);
+            for (String t : oldP.entityTags()) if (t.startsWith("aot_")) newP.addTag(t);
         });
     }
 

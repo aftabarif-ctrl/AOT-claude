@@ -1,0 +1,16 @@
+{
+  "itemGroup.aot": "Titans of Paradis",
+  "item.aot.odm_gear": "ODM Gear",
+  "item.aot.gas_canister": "Gas Canister",
+  "item.aot.ultrahard_blade": "Ultrahard Blade",
+  "item.aot.thunder_spear": "Thunder Spear",
+  "item.aot.titan_spike": "Titan Spike",
+  "item.aot.attack_titan_serum": "Attack Titan Serum",
+  "item.aot.war_hammer_titan_serum": "War Hammer Titan Serum",
+  "item.aot.titan_spawn_egg": "Titan Spawn Egg",
+  "item.aot.rogue_titan_spawn_egg": "Rogue Titan Spawn Egg",
+  "block.aot.crystal_block": "Hardened Crystal",
+  "entity.aot.titan": "Titan",
+  "entity.aot.rogue_titan": "Rogue Titan",
+  "entity.aot.thunder_spear": "Thunder Spear"
+}

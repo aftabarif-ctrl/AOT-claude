@@ -2,7 +2,7 @@ package com.aot;
 
 import java.util.function.Function;
 
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -81,7 +81,7 @@ public final class AotRegistry {
 
         // ---- creative tab ----
         ResourceKey<CreativeModeTab> tabKey = ResourceKey.create(Registries.CREATIVE_MODE_TAB, id("main"));
-        Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, tabKey, FabricItemGroup.builder()
+        Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, tabKey, FabricCreativeModeTab.builder()
                 .title(Component.translatable("itemGroup.aot"))
                 .icon(() -> new ItemStack(ODM_GEAR))
                 .displayItems((params, out) -> {

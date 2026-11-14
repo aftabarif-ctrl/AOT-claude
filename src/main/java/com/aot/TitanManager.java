@@ -100,7 +100,7 @@ public final class TitanManager {
     private static float ease(float x) { x = Math.max(0, Math.min(1, x)); return x * x * (3 - 2 * x); }
 
     public static Type inherited(ServerPlayer p) {
-        for (Type t : Type.values()) if (p.getTags().contains(t.tag)) return t;
+        for (Type t : Type.values()) if (p.entityTags().contains(t.tag)) return t;
         return null;
     }
 
@@ -202,31 +202,31 @@ public final class TitanManager {
         lightning(lv, p, 1);
         lv.playSound(null, p.blockPosition(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.PLAYERS, 3f, 0.7f);
         steam(lv, p, 40);
-        p.displayClientMessage(Component.literal("\u00a76You inherited the power of the " + t.label + "."), false);
+        p.sendSystemMessage(Component.literal("\u00a76You inherited the power of the " + t.label + "."));
         p.sendSystemMessage(Component.literal("\u00a77Hold a Titan Spike and right-click to transform."));
     }
 
     public static void useSpike(ServerPlayer p) {
         Type type = inherited(p);
         if (type == null) {
-            p.displayClientMessage(Component.literal("\u00a77You hold no Titan power. Drink a serum first."), true);
+            p.sendOverlayMessage(Component.literal("\u00a77You hold no Titan power. Drink a serum first."));
             return;
         }
         State s = STATES.get(p.getUUID());
         if (s == null) {
             STATES.put(p.getUUID(), new State(type));
-            p.displayClientMessage(Component.literal("\u00a7c" + type.label + "..."), true);
+            p.sendOverlayMessage(Component.literal("\u00a7c" + type.label + "..."));
             return;
         }
         if (s.phase != Phase.ACTIVE) return;
         if (p.isShiftKeyDown()) { startShrink(p, s); return; }
         if (type == Type.WAR_HAMMER && p.isSprinting()) {
             s.construct = (s.construct + 1) % CrystalForge.Construct.values().length;
-            p.displayClientMessage(Component.literal("\u00a7bConstruct: " + CrystalForge.Construct.values()[s.construct].label), true);
+            p.sendOverlayMessage(Component.literal("\u00a7bConstruct: " + CrystalForge.Construct.values()[s.construct].label));
             return;
         }
         if (s.cd > 0) {
-            p.displayClientMessage(Component.literal("\u00a77Recharging... " + (s.cd / 20 + 1) + "s"), true);
+            p.sendOverlayMessage(Component.literal("\u00a77Recharging... " + (s.cd / 20 + 1) + "s"));
             return;
         }
         if (type == Type.ATTACK) { roar(p, s); s.cd = 240; }
@@ -290,7 +290,7 @@ public final class TitanManager {
                     s.t = 0;
                     shockwave(lv, p, 8 + sc, 8f);
                     lv.playSound(null, p.blockPosition(), SoundEvents.WARDEN_SONIC_BOOM, SoundSource.PLAYERS, 4f, 0.7f);
-                    p.displayClientMessage(Component.literal("\u00a7c" + s.type.label), true);
+                    p.sendOverlayMessage(Component.literal("\u00a7c" + s.type.label));
                 }
             }
             case ACTIVE -> {
@@ -309,7 +309,7 @@ public final class TitanManager {
                 tickGrab(p, s, lv, sc);
                 if (p.tickCount % 10 == 0) {
                     String extra = s.type == Type.WAR_HAMMER ? "  \u00a7b[" + CrystalForge.Construct.values()[s.construct].label + "]" : "";
-                    p.displayClientMessage(Component.literal("\u00a7c" + s.type.label + " \u00a77" + (s.energy / 20) + "s" + extra), true);
+                    p.sendOverlayMessage(Component.literal("\u00a7c" + s.type.label + " \u00a77" + (s.energy / 20) + "s" + extra));
                 }
                 if (s.energy <= 0) startShrink(p, s);
             }
@@ -322,7 +322,7 @@ public final class TitanManager {
                     p.getCooldowns().addCooldown(new ItemStack(AotRegistry.TITAN_SPIKE), 600);
                     p.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 400, 1));
                     p.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 200, 1));
-                    p.displayClientMessage(Component.literal("\u00a77You return to human form, exhausted."), true);
+                    p.sendOverlayMessage(Component.literal("\u00a77You return to human form, exhausted."));
                 }
             }
         }
@@ -433,7 +433,7 @@ public final class TitanManager {
                 || !pl.getMainHandItem().isEmpty() || !(e instanceof LivingEntity)) return InteractionResult.PASS;
         s.grabbed = e.getUUID();
         ((ServerLevel) w).playSound(null, pl.blockPosition(), SoundEvents.ANVIL_PLACE, SoundSource.PLAYERS, 3f, 0.4f);
-        ((ServerPlayer) pl).displayClientMessage(Component.literal("\u00a7cGrabbed! Sneak to throw."), true);
+        ((ServerPlayer) pl).sendOverlayMessage(Component.literal("\u00a7cGrabbed! Sneak to throw."));
         return InteractionResult.SUCCESS;
     }
 }

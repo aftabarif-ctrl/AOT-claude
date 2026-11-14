@@ -28,7 +28,7 @@ public final class AotItems {
         public InteractionResult use(Level level, Player player, InteractionHand hand) {
             if (level instanceof ServerLevel && player instanceof ServerPlayer sp) {
                 if (TitanManager.inherited(sp) != null) {
-                    sp.displayClientMessage(Component.literal("\u00a77You already carry a Titan's power."), true);
+                    sp.sendOverlayMessage(Component.literal("\u00a77You already carry a Titan's power."));
                     return InteractionResult.FAIL;
                 }
                 TitanManager.grant(sp, type);
@@ -78,7 +78,7 @@ public final class AotItems {
             if (level instanceof ServerLevel lv) {
                 ItemStack odm = OdmManager.findGear(player);
                 if (odm == null || odm.getDamageValue() == 0) {
-                    player.displayClientMessage(Component.literal("\u00a77No ODM gear needs refilling."), true);
+                    player.sendOverlayMessage(Component.literal("\u00a77No ODM gear needs refilling."));
                     return InteractionResult.FAIL;
                 }
                 odm.setDamageValue(Math.max(0, odm.getDamageValue() - 600));

@@ -64,7 +64,7 @@ public final class OdmManager {
             return;
         }
         if (AotItems.OdmGear.gas(gear) <= 5) {
-            p.displayClientMessage(Component.literal("\u00a7cOut of gas! Use a Gas Canister."), true);
+            p.sendOverlayMessage(Component.literal("\u00a7cOut of gas! Use a Gas Canister."));
             return;
         }
         Vec3 eye = p.getEyePosition(), look = p.getLookAngle();
@@ -97,7 +97,7 @@ public final class OdmManager {
             ItemStack gear = findGear(p);
             if (gear == null || AotItems.OdmGear.gas(gear) <= 0) {
                 hooks.clear();
-                p.displayClientMessage(Component.literal("\u00a7cGas depleted!"), true);
+                p.sendOverlayMessage(Component.literal("\u00a7cGas depleted!"));
                 continue;
             }
             ServerLevel lv = (ServerLevel) p.level();
@@ -138,7 +138,7 @@ public final class OdmManager {
             p.fallDistance = 0;
             TitanManager.push(p, v);
             if (p.tickCount % 20 == 0)
-                p.displayClientMessage(Component.literal("\u00a7bGas " + AotItems.OdmGear.gas(gear) / 10 + "%"), true);
+                p.sendOverlayMessage(Component.literal("\u00a7bGas " + AotItems.OdmGear.gas(gear) / 10 + "%"));
         }
     }
 }
