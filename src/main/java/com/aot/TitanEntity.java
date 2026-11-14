@@ -1,10 +1,11 @@
 package com.aot;
 
+import java.util.UUID;
+
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerLevelAccessor;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -30,6 +31,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -155,7 +157,7 @@ public class TitanEntity extends Monster {
 
     /** Rogue Titan: 14x scale, ground-slam shockwaves, summons Titans at half health, drops a serum. */
     public static class Boss extends TitanEntity {
-        private final ServerBossEvent bar = new ServerBossEvent(Component.literal("Rogue Titan"),
+        private final ServerBossEvent bar = new ServerBossEvent(UUID.randomUUID(), Component.literal("Rogue Titan"),
                 BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.NOTCHED_10);
         private int slamTimer;
         private boolean summoned;
