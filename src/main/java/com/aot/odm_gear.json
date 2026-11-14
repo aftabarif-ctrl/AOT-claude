@@ -1,6 +1,11 @@
 {
-  "model": {
-    "type": "minecraft:model",
-    "model": "aot:item/odm_gear"
-  }
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": ["I I", "LNL", "I I"],
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "L": "minecraft:leather",
+    "N": "minecraft:iron_nugget"
+  },
+  "result": { "id": "aot:odm_gear", "count": 1 }
 }
